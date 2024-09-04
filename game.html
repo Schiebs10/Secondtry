@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Population Guess Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .output {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>What is the Population of Brazil?</h1>
+    <div class="slider-container">
+        <input type="range" min="100000000" max="300000000" value="215000000" class="slider" id="populationSlider">
+        <p>Selected Population: <span class="output" id="outputValue">215,000,000</span></p>
+    </div>
+    <button class="submit-btn" onclick="calculateScore()">Submit</button>
+    <p id="result"></p>
+
+    <script>
+        const slider = document.getElementById("populationSlider");
+        const output = document.getElementById("outputValue");
+        const result = document.getElementById("result");
+
+        slider.oninput = function () {
+            output.innerHTML = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function calculateScore() {
+            const correctAnswer = 215000000;
+            const userGuess = parseInt(slider.value);
+            const difference = Math.abs(correctAnswer - userGuess);
+            const maxDifference = correctAnswer - 100000000;
+            const score = Math.max(0, 100 - (difference / maxDifference) * 100);
+            result.innerHTML = `Your score: ${Math.round(score)} out of 100`;
+        }
+    </script>
+</body>
+
+</html>
